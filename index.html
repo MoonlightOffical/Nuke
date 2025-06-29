@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Target Terminated</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: #00ff9f;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      animation: flickerBg 2s infinite;
+    }
+
+    h1 {
+      font-size: 3em;
+      text-shadow: 0 0 10px #00ff9f, 0 0 20px #00ff9f;
+      animation: flickerText 1.5s infinite;
+    }
+
+    @keyframes flickerText {
+      0% { opacity: 1; }
+      50% { opacity: 0.8; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes flickerBg {
+      0%, 100% { background-color: black; }
+      50% { background-color: #050505; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Target Terminated<br>Congrats!</h1>
+
+  <audio autoplay>
+    <source src="https://www.soundjay.com/misc/sounds/explosion-01.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+</body>
+</html>
