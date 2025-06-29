@@ -8,8 +8,7 @@
     body {
       margin: 0;
       padding: 0;
-      background: black;
-      color: #00ff9f;
+      background: radial-gradient(#111 0%, #000 100%);
       font-family: 'Courier New', monospace;
       display: flex;
       flex-direction: column;
@@ -17,38 +16,72 @@
       align-items: center;
       height: 100vh;
       overflow: hidden;
-      animation: flickerBg 2s infinite;
+      animation: bgPulse 5s infinite;
     }
 
-    h1 {
+    @keyframes bgPulse {
+      0%, 100% { background-color: #000; }
+      50% { background-color: #110000; }
+    }
+
+    .glitch-text {
       font-size: 3em;
-      text-shadow: 0 0 10px #00ff9f, 0 0 20px #00ff9f;
-      animation: flickerText 1.5s infinite;
-      text-align: center;
-      margin-bottom: 20px;
+      color: #00ff9f;
+      text-shadow: 0 0 5px #00ff9f, 0 0 10px #00ff9f;
+      position: relative;
+      animation: glitch 2s infinite;
     }
 
-    p {
+    @keyframes glitch {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(2px, -2px); }
+      60% { transform: translate(-1px, 1px); }
+      80% { transform: translate(1px, -1px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    #counter {
+      margin-top: 20px;
       font-size: 1.5em;
       color: #ff0055;
-      text-shadow: 0 0 10px #ff0055;
+      text-shadow: 0 0 5px #ff0055;
+      opacity: 0;
+      animation: fadeIn 3s forwards 3s;
     }
 
-    @keyframes flickerText {
-      0% { opacity: 1; }
-      50% { opacity: 0.8; }
-      100% { opacity: 1; }
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
-    @keyframes flickerBg {
-      0%, 100% { background-color: black; }
-      50% { background-color: #050505; }
+    #typewriter {
+      color: #ffffff;
+      font-size: 1.3em;
+      text-align: center;
+      width: 80%;
+      max-width: 600px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #00ff9f;
+      animation: typing 2.5s steps(30), blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent }
     }
   </style>
 </head>
 <body>
-  <h1>Target Terminated<br>Congrats!</h1>
-  <p id="visitCount">People you nuked: 1</p>
+
+  <div id="typewriter">Initiating termination sequence...</div>
+
+  <h1 class="glitch-text" style="margin-top: 20px;">Target Terminated<br>Congrats!</h1>
+  <p id="counter">People you nuked: 1</p>
 
   <audio autoplay>
     <source src="https://www.soundjay.com/misc/sounds/explosion-01.mp3" type="audio/mp3">
@@ -56,19 +89,14 @@
   </audio>
 
   <script>
-    // Get the current count from localStorage
-    let count = localStorage.getItem("nukeCount");
-    if (!count) {
-      count = 1;
-    } else {
-      count = parseInt(count) + 1;
-    }
-
-    // Save the updated count back to localStorage
-    localStorage.setItem("nukeCount", count);
-
-    // Display the count on the page
-    document.getElementById("visitCount").textContent = `People you nuked: ${count}`;
+    // Delay showing main content
+    window.onload = () => {
+      // Nuke counter logic
+      let count = localStorage.getItem("nukeCount");
+      count = count ? parseInt(count) + 1 : 1;
+      localStorage.setItem("nukeCount", count);
+      document.getElementById("counter").textContent = `People you nuked: ${count}`;
+    };
   </script>
 </body>
 </html>
