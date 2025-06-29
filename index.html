@@ -12,6 +12,7 @@
       color: #00ff9f;
       font-family: 'Courier New', monospace;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
@@ -23,6 +24,14 @@
       font-size: 3em;
       text-shadow: 0 0 10px #00ff9f, 0 0 20px #00ff9f;
       animation: flickerText 1.5s infinite;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.5em;
+      color: #ff0055;
+      text-shadow: 0 0 10px #ff0055;
     }
 
     @keyframes flickerText {
@@ -39,10 +48,27 @@
 </head>
 <body>
   <h1>Target Terminated<br>Congrats!</h1>
+  <p id="visitCount">People you nuked: 1</p>
 
   <audio autoplay>
     <source src="https://www.soundjay.com/misc/sounds/explosion-01.mp3" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
+
+  <script>
+    // Get the current count from localStorage
+    let count = localStorage.getItem("nukeCount");
+    if (!count) {
+      count = 1;
+    } else {
+      count = parseInt(count) + 1;
+    }
+
+    // Save the updated count back to localStorage
+    localStorage.setItem("nukeCount", count);
+
+    // Display the count on the page
+    document.getElementById("visitCount").textContent = `People you nuked: ${count}`;
+  </script>
 </body>
 </html>
